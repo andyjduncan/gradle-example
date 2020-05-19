@@ -1,0 +1,31 @@
+plugins {
+    id 'groovy'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
+}
+
+repositories {
+    jcenter()
+    flatDir {
+        dirs 'lib'
+    }
+}
+
+archivesBaseName = 'gradle-example'
+
+dependencies {
+    implementation 'org.codehaus.groovy:groovy:3.+'
+
+    // Groovy module dependency
+    implementation 'org.codehaus.groovy:groovy-json:3.+'
+
+    // Strictly exact version of Maven dependency
+    implementation 'com.codevineyard:hello-world:1.0.1!!'
+
+    // Dependency from local jar
+    implementation ':simple-jar'
+}
+
+application {
+    mainClassName = 'com.adjectivecolournoun.gradle.Greetz'
+}
