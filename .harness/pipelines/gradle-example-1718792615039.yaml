@@ -25,7 +25,7 @@ pipeline:
                   identifier: gradlebuild
                   spec:
                     shell: Sh
-                    command: gradle -e build
+                    command: gradle --debug build
               - step:
                   type: Run
                   name: find-jar
