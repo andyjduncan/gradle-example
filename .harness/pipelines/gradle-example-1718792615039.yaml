@@ -25,22 +25,14 @@ pipeline:
                   identifier: gradlebuild
                   spec:
                     shell: Sh
-                    command: gradle build
+                    command: gradle -e build
               - step:
-                  type: RunTests
-                  name: gradle-test
-                  identifier: gradletest
+                  type: Run
+                  name: find-jar
+                  identifier: findjar
                   spec:
-                    language: Java
-                    buildTool: Gradle
-                    args: clean test
-                    runOnlySelectedTests: true
-                    reports:
-                      type: JUnit
-                      spec:
-                        paths:
-                          - "**/*.xml"
-                    enableTestSplitting: false
+                    shell: Sh
+                    command: pwd
           platform:
             os: Linux
             arch: Amd64
