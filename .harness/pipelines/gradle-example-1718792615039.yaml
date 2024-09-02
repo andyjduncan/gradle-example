@@ -25,14 +25,16 @@ pipeline:
                   identifier: gradlebuild
                   spec:
                     shell: Sh
-                    command: gradle --debug build
+                    command: gradle build
               - step:
                   type: Run
                   name: find-jar
                   identifier: findjar
                   spec:
                     shell: Sh
-                    command: pwd
+                    command: |-
+                      cd /harness/build/libs/
+                      ls -lrt
           platform:
             os: Linux
             arch: Arm64
