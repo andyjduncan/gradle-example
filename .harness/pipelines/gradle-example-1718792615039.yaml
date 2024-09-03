@@ -35,6 +35,7 @@ pipeline:
                     command: |-
                       cd /harness/build/libs/
                       ls -lrt
+                      java -jar gradle-example.jar
           platform:
             os: Linux
             arch: Arm64
