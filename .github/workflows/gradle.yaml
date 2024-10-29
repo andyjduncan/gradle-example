@@ -18,6 +18,10 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'  # Use the same distribution for both jobs
+        
+    - name: Set JAVA_HOME
+      run: echo "JAVA_HOME=$(dirname $(dirname $(readlink -f $(which java))))" >> $GITHUB_ENV
+
 
     - name: Cache Gradle packages
       uses: actions/cache@v3
@@ -29,6 +33,8 @@ jobs:
 
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4.0.0
+      with:
+        gradle-version: '7.6'
 
     - name: Build with Gradle Wrapper
       run: ./gradlew shadowJar
