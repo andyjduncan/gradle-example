@@ -24,6 +24,9 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew shadowJar
-
+        
+      - name: Build Docker image
+        run: Dcoker build -t gradle-image .
+        
       - name: Run the application
         run: java -jar build/libs/gradle-example-all.jar
