@@ -1,4 +1,4 @@
-name: Example Workflow
+name: CI pipeline using called workflow
 
 on:
   push:
