@@ -1,0 +1,14 @@
+name: Example Workflow
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  call-centralized-workflow:
+    uses: kishore3github/github-actions/blob/main/.github/workflows/java-ci.yaml@master
+    with:
+        repoName: ${{ github.repository }}
+    # secrets:
+    #   EXAMPLE_SECRET: ${{ secrets.EXAMPLE_SECRET }}
