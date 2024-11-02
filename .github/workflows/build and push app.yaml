@@ -7,7 +7,7 @@ on:
 
 jobs:
   Build_and_push_image_to_dockerhub:
-    uses: kishore3github/github-actions/main/.github/workflows/java-ci.yaml@main
+    uses: kishore3github/github-actions/.github/workflows/java-ci.yaml@main
     with:
         repoName: ${{ github.repository }}
     # secrets:
