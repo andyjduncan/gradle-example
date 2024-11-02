@@ -7,7 +7,7 @@ on:
 
 jobs:
   call-centralized-workflow:
-    uses: kishore3github/github-actions/blob/main/.github/workflows/java-ci.yaml@master
+    uses: kishore3github/github-actions/blob/main/.github/workflows/java-ci.yaml@main
     with:
         repoName: ${{ github.repository }}
     # secrets:
