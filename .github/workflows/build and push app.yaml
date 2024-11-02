@@ -12,4 +12,3 @@ jobs:
         repoName: ${{ github.repository }}
     # secrets:
     #   EXAMPLE_SECRET: ${{ secrets.EXAMPLE_SECRET }}
-
