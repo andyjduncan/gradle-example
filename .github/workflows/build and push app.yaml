@@ -10,5 +10,6 @@ jobs:
     uses: kishore3github/github-actions/.github/workflows/java-ci.yaml@main
     with:
         repoName: ${{ github.repository }}
-    # secrets:
-    #   EXAMPLE_SECRET: ${{ secrets.EXAMPLE_SECRET }}
+    secrets:
+       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
