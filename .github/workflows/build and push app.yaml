@@ -6,8 +6,8 @@ on:
       - master
 
 jobs:
-  call-centralized-workflow:
-    uses: kishore3github/github-actions/blob/main/.github/workflows/java-ci.yaml@main
+  Build_and_push_image_to_dockerhub:
+    uses: kishore3github/github-actions/main/.github/workflows/java-ci.yaml@main
     with:
         repoName: ${{ github.repository }}
     # secrets:
