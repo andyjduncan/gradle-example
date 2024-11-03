@@ -16,8 +16,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
-        with:
-          path: 'master/src/main/groovy/com/adjectivecolournoun'
+        # with:
+        #   path: 'master/src/main/groovy/com/adjectivecolournoun'
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
@@ -30,9 +30,9 @@ jobs:
         with:
           languages: java
 
-      # - name: Build with Gradle
-      #   run: |
-      #     ./gradlew build -x test  # Skipping tests to speed up the analysis, but you can remove -x test to include them
-
+      - name: Build project with Gradle
+        run: |
+          ./gradlew compileGroovy
+          
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
