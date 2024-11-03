@@ -28,11 +28,11 @@ jobs:
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v2
         with:
-          languages: java
+          languages: java, kotlin
 
       - name: Build project with Gradle
         run: |
-          ./gradlew compileGroovy build
+          ./gradlew compileGroovy build --warning-mode all
           # mkdir -p build/classes/java/main
           
       - name: Perform CodeQL Analysis
