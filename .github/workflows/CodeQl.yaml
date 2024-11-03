@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+        with:
+          path: 'master/src/main/groovy/com/adjectivecolournoun'
 
       - name: Set up JDK 17
         uses: actions/setup-java@v3
