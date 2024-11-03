@@ -32,8 +32,8 @@ jobs:
 
       - name: Build project with Gradle
         run: |
-          ./gradlew compileGroovy
-          mkdir -p build/classes/java/main
+          ./gradlew compileGroovy build
+          # mkdir -p build/classes/java/main
           
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
