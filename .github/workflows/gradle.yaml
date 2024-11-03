@@ -55,7 +55,12 @@ jobs:
         run: java -jar build/libs/gradle-example-all.jar
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@v0.28.0
+        uses: aquasecurity/trivy-action@0.28.0
         with:
-          image-ref: "gradle-example-app:latest"
+          image-ref: 'docker.io/${{ secrets.DOCKER_USERNAME }}/gradle-example-app:latest'
+          format: 'table'
+          exit-code: '1'
+          ignore-unfixed: true
+          vuln-type: 'os,library'
+          severity: 'CRITICAL,HIGH'
 
