@@ -32,15 +32,16 @@ jobs:
           java-version: '17'
           distribution: 'temurin' 
 
-      - name: Initialize CodeQL
-        uses: github/codeql-action/init@v2
-        with:
-          languages: ${{ env.LANGUAGE }}
 
       - name: Build project with Gradle
         run: |
           ./gradlew compileGroovy build --warning-mode all
           # mkdir -p build/classes/java/main
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v2
+        with:
+          languages: ${{ env.LANGUAGE }}
           
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v2
