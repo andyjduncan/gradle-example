@@ -55,7 +55,7 @@ jobs:
         run: java -jar build/libs/gradle-example-all.jar
 
       - name: Run Trivy vulnerability scanner
-        uses: aquasecurity/trivy-action@v0.1.1
+        uses: aquasecurity/trivy-action@latest
         with:
           image-ref: "gradle-example-app:latest"
 
