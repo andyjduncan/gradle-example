@@ -25,6 +25,7 @@ jobs:
           distribution: 'adopt'
           
       - name: Install SonarScanner
+        if: matrix.tool == 'sonarcloud'
         run: |
           # Download the latest version of SonarScanner
           curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
@@ -32,6 +33,7 @@ jobs:
           echo "$HOME/sonar-scanner-4.8.0.2856-linux/bin" >> $GITHUB_PATH
 
       - name: Verify SonarScanner Installation
+        if: matrix.tool == 'sonarcloud'
         run: |
           which sonar-scanner || echo "SonarScanner is not installed in the PATH."
           sonar-scanner -v || echo "Unable to retrieve SonarScanner version."
