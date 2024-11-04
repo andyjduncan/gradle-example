@@ -31,6 +31,11 @@ jobs:
           unzip sonar-scanner.zip -d $HOME
           export PATH="$HOME/sonar-scanner-4.8.0.2856-linux/bin:$PATH"
 
+      - name: Verify SonarScanner Installation
+        run: |
+          which sonar-scanner || echo "SonarScanner is not installed in the PATH."
+          sonar-scanner -v || echo "Unable to retrieve SonarScanner version."
+
       - name: SonarCloud Scan
         if: matrix.tool == 'sonarcloud'
         env:
