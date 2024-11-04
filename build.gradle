@@ -1,9 +1,8 @@
 plugins {
     id 'groovy'
     id 'application'
-    id 'com.github.johnrengelman.shadow' version '5.2.0'
-    id "org.sonarqube" version "5.1.0.4882"
-
+    id 'com.github.johnrengelman.shadow' version '7.1.0' // Consider updating to the latest version
+    id "org.sonarqube" version "3.3" // Update to the latest SonarQube plugin version
 }
 
 repositories {
@@ -12,6 +11,7 @@ repositories {
         dirs 'lib'
     }
 }
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
@@ -21,25 +21,24 @@ java {
 archivesBaseName = 'gradle-example'
 
 dependencies {
-    implementation 'org.codehaus.groovy:groovy:3.0.9' // or a later version
-    implementation 'org.codehaus.groovy:groovy-json:3.0.9' // or a later version
-    implementation 'com.codevineyard:hello-world:1.0.1!!'
+    implementation 'org.codehaus.groovy:groovy:3.0.9' // Consider updating to a later version if available
+    implementation 'org.codehaus.groovy:groovy-json:3.0.9'
+    implementation 'com.codevineyard:hello-world:1.0.1'
     implementation ':simple-jar'
 }
 
 sonar {
-  properties {
-    property "sonar.projectKey", "kishore3github_gradle-example"
-    property "sonar.token", System.getenv('SONAR_TOKEN')
-    property "sonar.projectVersion", "1.0"
-    property "sonar.organization", "kishore3github"
-    property "sonar.sources", "src"
-    property "sonar.host.url", "https://sonarcloud.io"
-    property "sonar.java.source", "17"
-    property "sonar.language", "java"
-    property "sonar.exclusions", "**/build/**, **/*.test.groovy"
-
-  }
+    properties {
+        property "sonar.projectKey", "kishore3github_gradle-example"
+        property "sonar.token", System.getenv('SONAR_TOKEN')
+        property "sonar.projectVersion", "1.0"
+        property "sonar.organization", "kishore3github"
+        property "sonar.sources", "src/main/groovy" // Change to point directly to your source directory
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.java.source", "17"
+        property "sonar.language", "java"
+        property "sonar.exclusions", "**/build/**, **/*.test.groovy"
+    }
 }
 
 application {
