@@ -24,15 +24,16 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
 
-      # - name: SonarCloud Scan
-      #   if: matrix.tool == 'sonarcloud'
-      #   env:
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      #   run: |
-      #     sonar-scanner \
-      #       -Dsonar.organization="your-sonarcloud-organization" \
-      #       -Dsonar.projectKey="your-project-key" \
-      #       -Dsonar.sources="src"
+      - name: SonarCloud Scan
+        if: matrix.tool == 'sonarcloud'
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          sonar-scanner \
+            -Dsonar.organization="kishore3github" \
+            -Dsonar.projectKey=""kishore3github_gradle-example" \
+            -Dsonar.sources="src" \
+            -Dsonar.host.url="https://sonarcloud.io" 
 
       - name: Run Semgrep
         if: matrix.tool == 'semgrep'
