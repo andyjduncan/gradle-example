@@ -1,11 +1,11 @@
 name: Gradle Build
 
-on:
-  push:
-    branches:
-      - master
-    paths-ignore:
-      - '.github/workflows/**'
+# on:
+#   push:
+#     branches:
+#       - master
+#     paths-ignore:
+#       - '.github/workflows/**'
 
 jobs:
   build:
