@@ -34,9 +34,9 @@ jobs:
           echo "JAVA_HOME: $JAVA_HOME"
           echo "PATH: $PATH"
 
-      - name: Build with Gradle
-        if: matrix.tool == 'sonarcloud'
-        run: ./gradlew build
+      # - name: Build with Gradle
+        # if: matrix.tool == 'sonarcloud'
+        # run: ./gradlew build
 
       - name: Cache SonarCloud scanner
         if: matrix.tool == 'sonarcloud'
@@ -46,12 +46,27 @@ jobs:
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
-      - name: Install SonarCloud Scanner
+      - name: Cache Gradle packages
         if: matrix.tool == 'sonarcloud'
-        run: |
-          unzip sonar-scanner.zip
-          echo "SONAR_SCANNER_HOME=$(pwd)/sonar-scanner-4.8.0.2856-linux" >> $GITHUB_ENV
-          echo "$SONAR_SCANNER_HOME/bin" >> $GITHUB_PATH
+        uses: actions/cache@v4
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle
+          
+      - name: Build and analyze
+        if: matrix.tool == 'sonarcloud'
+        env:
+         # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew build sonar --info
+
+      # - name: Install SonarCloud Scanner
+      #   if: matrix.tool == 'sonarcloud'
+      #   run: |
+      #     unzip sonar-scanner.zip
+      #     echo "SONAR_SCANNER_HOME=$(pwd)/sonar-scanner-4.8.0.2856-linux" >> $GITHUB_ENV
+      #     echo "$SONAR_SCANNER_HOME/bin" >> $GITHUB_PATH
 
       # - name: Install SonarScanner
       #   if: matrix.tool == 'sonarcloud'
@@ -61,25 +76,25 @@ jobs:
       #     unzip sonar-scanner.zip -d $HOME
       #     echo "$HOME/sonar-scanner-5.1.0.4882-linux/bin" >> $GITHUB_PATH
 
-      - name: Verify SonarScanner Installation
-        if: matrix.tool == 'sonarcloud'
-        run: |
-          which sonar-scanner || echo "SonarScanner is not installed in the PATH."
-          sonar-scanner -v || echo "Unable to retrieve SonarScanner version."
+      # - name: Verify SonarScanner Installation
+      #   if: matrix.tool == 'sonarcloud'
+      #   run: |
+      #     which sonar-scanner || echo "SonarScanner is not installed in the PATH."
+      #     sonar-scanner -v || echo "Unable to retrieve SonarScanner version."
 
-      - name: SonarCloud Scan
-        if: matrix.tool == 'sonarcloud'
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          # export JAVA_HOME=/opt/hostedtoolcache/Java_Adopt_jdk/17.0.13-11/x64
-          # export PATH=$JAVA_HOME/bin:$PATH
-          sonar-scanner \
-            -Dsonar.organization="kishore3github" \
-            -Dsonar.projectKey="kishore3github_gradle-example" \
-            -Dsonar.sources="src" \
-            -Dsonar.host.url="https://sonarcloud.io" \
-            -Dsonar.login=$SONAR_TOKEN 
+      # - name: SonarCloud Scan
+      #   if: matrix.tool == 'sonarcloud'
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #   run: |
+      #     # export JAVA_HOME=/opt/hostedtoolcache/Java_Adopt_jdk/17.0.13-11/x64
+      #     # export PATH=$JAVA_HOME/bin:$PATH
+      #     sonar-scanner \
+      #       -Dsonar.organization="kishore3github" \
+      #       -Dsonar.projectKey="kishore3github_gradle-example" \
+      #       -Dsonar.sources="src" \
+      #       -Dsonar.host.url="https://sonarcloud.io" \
+      #       -Dsonar.login=$SONAR_TOKEN 
 
       - name: Run Semgrep
         if: matrix.tool == 'semgrep'
