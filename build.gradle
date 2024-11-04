@@ -25,6 +25,8 @@ dependencies {
     implementation 'org.codehaus.groovy:groovy-json:3.0.9'
     implementation 'com.codevineyard:hello-world:1.0.1'
     implementation ':simple-jar'
+    implementation 'javax.servlet:javax.servlet-api:4.0.1'
+    
 }
 
 sonar {
