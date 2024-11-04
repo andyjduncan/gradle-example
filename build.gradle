@@ -2,7 +2,7 @@ plugins {
     id 'groovy'
     id 'application'
     id 'com.github.johnrengelman.shadow' version '7.1.0' // Consider updating to the latest version
-    id "org.sonarqube" version "3.3" // Update to the latest SonarQube plugin version
+    id "org.sonarqube" version "5.1.0.4882" // Update to the latest SonarQube plugin version
 }
 
 repositories {
