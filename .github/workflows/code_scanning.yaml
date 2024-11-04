@@ -1,0 +1,40 @@
+name: Code Quality and Security Analysis
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        tool: [sonarcloud, semgrep]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK (only for SonarCloud)
+        if: matrix.tool == 'sonarcloud'
+        uses: actions/setup-java@v3
+        with:
+          java-version: '11'
+
+      # - name: SonarCloud Scan
+      #   if: matrix.tool == 'sonarcloud'
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #   run: |
+      #     sonar-scanner \
+      #       -Dsonar.organization="your-sonarcloud-organization" \
+      #       -Dsonar.projectKey="your-project-key" \
+      #       -Dsonar.sources="src"
+
+      - name: Run Semgrep
+        if: matrix.tool == 'semgrep'
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: 'p/ci'
