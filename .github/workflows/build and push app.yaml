@@ -1,12 +1,12 @@
 name: CI pipeline using called workflow
 
-on:
-  push:
-    branches:
-      - master
-    paths-ignore:
-      - '.github/workflows/**'
-      - 'examples/**'
+# on:
+#   push:
+#     branches:
+#       - master
+#     paths-ignore:
+#       - '.github/workflows/**'
+#       - 'examples/**'
 
 jobs:
   Build_and_push_image_to_dockerhub:
