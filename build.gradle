@@ -30,9 +30,11 @@ dependencies {
 sonar {
   properties {
     property "sonar.projectKey", "kishore3github_gradle-example"
+    property "sonar.login", System.getenv('SONAR_TOKEN')
     property "sonar.organization", "kishore3github"
     property "sonar.sources", "src/main/groovy"
     property "sonar.host.url", "https://sonarcloud.io"
+    property "sonar.java.source", "17"
   }
 }
 
