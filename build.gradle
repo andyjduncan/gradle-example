@@ -37,6 +37,8 @@ sonar {
     property "sonar.host.url", "https://sonarcloud.io"
     property "sonar.java.source", "17"
     property "sonar.language", "java"
+    property "sonar.exclusions", "**/build/**, **/*.test.groovy"
+
   }
 }
 
