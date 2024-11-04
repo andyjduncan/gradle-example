@@ -35,17 +35,19 @@ jobs:
           echo "PATH: $PATH"
 
       - name: Build with Gradle
+        if: matrix.tool == 'sonarcloud'
         run: ./gradlew build
 
       - name: Cache SonarCloud scanner
+        if: matrix.tool == 'sonarcloud'
         uses: actions/cache@v2
         with:
-          path: sonar-scanner-4.8.0.2856-linux
-          key: sonar-scanner-${{ runner.os }}-${{ hashFiles('**/sonar-scanner.zip') }}
-          restore-keys: |
-            sonar-scanner-${{ runner.os }}-
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
 
       - name: Install SonarCloud Scanner
+        if: matrix.tool == 'sonarcloud'
         run: |
           unzip sonar-scanner.zip
           echo "SONAR_SCANNER_HOME=$(pwd)/sonar-scanner-4.8.0.2856-linux" >> $GITHUB_ENV
