@@ -43,13 +43,16 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
+          # Set JAVA_HOME and update PATH
           export JAVA_HOME=/opt/hostedtoolcache/Java_Adopt_jdk/17.0.13-11/x64
           export PATH=$JAVA_HOME/bin:$PATH
-          sonar-scanner \
+          
+          # Run sonar-scanner with a subshell to ensure environment variables are effective
+          (export JAVA_HOME=$JAVA_HOME; export PATH=$PATH; sonar-scanner \
             -Dsonar.organization="kishore3github" \
             -Dsonar.projectKey="kishore3github_gradle-example" \
             -Dsonar.sources="src" \
-            -Dsonar.host.url="https://sonarcloud.io" 
+            -Dsonar.host.url="https://sonarcloud.io")
 
       - name: Run Semgrep
         if: matrix.tool == 'semgrep'
