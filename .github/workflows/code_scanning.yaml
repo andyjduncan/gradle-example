@@ -34,14 +34,30 @@ jobs:
           echo "JAVA_HOME: $JAVA_HOME"
           echo "PATH: $PATH"
 
-          
-      - name: Install SonarScanner
-        if: matrix.tool == 'sonarcloud'
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      - name: Cache SonarCloud scanner
+        uses: actions/cache@v2
+        with:
+          path: sonar-scanner-4.8.0.2856-linux
+          key: sonar-scanner-${{ runner.os }}-${{ hashFiles('**/sonar-scanner.zip') }}
+          restore-keys: |
+            sonar-scanner-${{ runner.os }}-
+
+      - name: Install SonarCloud Scanner
         run: |
-          # Download the latest version of SonarScanner
-          curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
-          unzip sonar-scanner.zip -d $HOME
-          echo "$HOME/sonar-scanner-5.1.0.4882-linux/bin" >> $GITHUB_PATH
+          unzip sonar-scanner.zip
+          echo "SONAR_SCANNER_HOME=$(pwd)/sonar-scanner-4.8.0.2856-linux" >> $GITHUB_ENV
+          echo "$SONAR_SCANNER_HOME/bin" >> $GITHUB_PATH
+
+      # - name: Install SonarScanner
+      #   if: matrix.tool == 'sonarcloud'
+      #   run: |
+      #     # Download the latest version of SonarScanner
+      #     curl -sSLo sonar-scanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
+      #     unzip sonar-scanner.zip -d $HOME
+      #     echo "$HOME/sonar-scanner-5.1.0.4882-linux/bin" >> $GITHUB_PATH
 
       - name: Verify SonarScanner Installation
         if: matrix.tool == 'sonarcloud'
@@ -54,13 +70,14 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
-          export JAVA_HOME=/opt/hostedtoolcache/Java_Adopt_jdk/17.0.13-11/x64
-          export PATH=$JAVA_HOME/bin:$PATH
+          # export JAVA_HOME=/opt/hostedtoolcache/Java_Adopt_jdk/17.0.13-11/x64
+          # export PATH=$JAVA_HOME/bin:$PATH
           sonar-scanner \
             -Dsonar.organization="kishore3github" \
             -Dsonar.projectKey="kishore3github_gradle-example" \
             -Dsonar.sources="src" \
-            -Dsonar.host.url="https://sonarcloud.io"
+            -Dsonar.host.url="https://sonarcloud.io" \
+            -Dsonar.login=$SONAR_TOKEN 
 
       - name: Run Semgrep
         if: matrix.tool == 'semgrep'
