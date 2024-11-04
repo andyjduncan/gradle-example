@@ -43,6 +43,8 @@ jobs:
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: |
+          export JAVA_HOME=/opt/hostedtoolcache/Java_Adopt_jdk/17.0.13-11/x64
+          export PATH=$JAVA_HOME/bin:$PATH
           sonar-scanner \
             -Dsonar.organization="kishore3github" \
             -Dsonar.projectKey="kishore3github_gradle-example" \
