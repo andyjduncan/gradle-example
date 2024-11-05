@@ -5,29 +5,22 @@ on:
     branches:
       - master
     paths-ignore:
-      # - '.github/workflows/**'
       - 'examples/**'
 
 jobs:
   analyze:
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        tool: [sonarcloud, semgrep]
-    steps:
-      - name: Call reusable workflow
-        uses: kishore3github/github-actions/.github/workflows/code_scanning.yaml@main
-        with:
-          language: 'java'
-          version: '17'
-          distribution: 'adopt'
-       secrets:
-           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} 
+      uses: kishore3github/github-actions/.github/workflows/code_scanning.yaml@main
+      with:
+        language: 'java'
+        version: '17'
+        distribution: 'adopt'
+      secrets:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   Build_and_push_image_to_dockerhub:
     uses: kishore3github/github-actions/.github/workflows/java-ci.yaml@main
     with:
-        repoName: ${{ github.repository }}
+      repoName: ${{ github.repository }}
     secrets:
-       DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-       DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+      DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+      DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
