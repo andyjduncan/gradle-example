@@ -12,6 +12,10 @@ jobs:
     strategy:
       matrix:
         tool: [sonarcloud, semgrep]
+    env: 
+       LANGUAGE: 'java'
+       VERSION: '17'
+       DISTRIBUTION: 'adopt'
 
     steps:
       - name: Checkout code
@@ -21,8 +25,8 @@ jobs:
         if: matrix.tool == 'sonarcloud'
         uses: actions/setup-java@v3
         with:
-          java-version: '17'
-          distribution: 'adopt'
+          java-version: ${{ matrix.tool == 'sonarcloud' && env.VERSION || '8' }}
+          distribution: ${{ env.DISTRIBUTION }}
           
       - name: Verify Java Version
         if: matrix.tool == 'sonarcloud'
