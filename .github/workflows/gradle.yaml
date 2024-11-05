@@ -1,4 +1,4 @@
-name: Gradle Build
+name: Java-CI
 
 # on:
 #   push:
@@ -7,7 +7,79 @@ name: Gradle Build
 #     paths-ignore:
 #       - '.github/workflows/**'
 
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
 jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        tool: [sonarcloud, semgrep]
+    env: 
+       LANGUAGE: 'java'
+       VERSION: '17'
+       DISTRIBUTION: 'adopt'
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up JDK (only for SonarCloud)
+        if: matrix.tool == 'sonarcloud'
+        uses: actions/setup-java@v3
+        with:
+          java-version: ${{ matrix.tool == 'sonarcloud' && env.VERSION || '8' }}
+          distribution: ${{ env.DISTRIBUTION }}
+          
+      - name: Verify Java Version
+        if: matrix.tool == 'sonarcloud'
+        run: java -version
+
+      - name: Print JAVA_HOME and PATH
+        if: matrix.tool == 'sonarcloud'
+        run: |
+          echo "JAVA_HOME: $JAVA_HOME"
+          echo "PATH: $PATH"
+
+      # - name: Build with Gradle
+        # if: matrix.tool == 'sonarcloud'
+        # run: ./gradlew build
+
+      - name: Cache SonarCloud scanner
+        if: matrix.tool == 'sonarcloud'
+        uses: actions/cache@v2
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Cache Gradle packages
+        if: matrix.tool == 'sonarcloud'
+        uses: actions/cache@v4
+        with:
+          path: ~/.gradle/caches
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle') }}
+          restore-keys: ${{ runner.os }}-gradle
+          
+      - name: Build and analyze
+        if: matrix.tool == 'sonarcloud'
+        env:
+         # GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew build sonar --info
+
+
+      - name: Run Semgrep
+        if: matrix.tool == 'semgrep'
+        uses: returntocorp/semgrep-action@v1
+        with:
+          config: 'p/ci'
+
   build:
     runs-on: ubuntu-latest
 
