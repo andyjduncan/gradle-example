@@ -8,7 +8,7 @@ on:
       - 'examples/**'
 
 jobs:
-  analyze:
+  code_analyze:
       uses: kishore3github/github-actions/.github/workflows/code_scanning.yaml@main
       with:
         language: 'java'
