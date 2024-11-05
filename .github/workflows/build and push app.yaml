@@ -18,6 +18,7 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   Build_and_push_image_to_dockerhub:
+    needs: code_analyze
     uses: kishore3github/github-actions/.github/workflows/java-ci.yaml@main
     with:
       repoName: ${{ github.repository }}
