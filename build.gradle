@@ -38,7 +38,7 @@ sonar {
         property "sonar.sources", "src/main/groovy" // Change to point directly to your source directory
         property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.java.source", "17"
-        property "sonar.language", "java"
+        property "sonar.language", "groovy"
         property "sonar.exclusions", "**/build/**, **/*.test.groovy"
     }
 }
