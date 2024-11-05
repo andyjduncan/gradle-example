@@ -1,0 +1,44 @@
+pipeline:
+  identifier: Build_Gopajit_gradle_example_1718792632204
+  name: gopajit-gradle-example
+  orgIdentifier: default
+  projectIdentifier: GopajitGradleProject
+  properties:
+    ci:
+      codebase:
+        build: <+input>
+        connectorRef: account.Github
+        repoName: Gopajit/gradle-example
+  stages:
+    - stage:
+        identifier: build
+        name: build
+        spec:
+          caching:
+            enabled: true
+          cloneCodebase: true
+          execution:
+            steps:
+              - step:
+                  type: Run
+                  name: gradle-build
+                  identifier: gradlebuild
+                  spec:
+                    shell: Sh
+                    command: gradle build
+              - step:
+                  type: Run
+                  name: find-jar
+                  identifier: findjar
+                  spec:
+                    shell: Sh
+                    command: |-
+                      cd /harness/build/libs/
+                      ls -lrt
+          platform:
+            os: Linux
+            arch: Arm64
+          runtime:
+            type: Cloud
+            spec: {}
+        type: CI

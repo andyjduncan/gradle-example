@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_Gopajit_gradle_example_1718792632204-push-trigger-input-set
+  identifier: Build_Gopajit_gradle_example_1718792632204pushtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: GopajitGradleProject
+  pipeline:
+    identifier: Build_Gopajit_gradle_example_1718792632204
+    properties:
+      ci:
+        codebase:
+          build:
+            type: branch
+            spec:
+              branch: <+trigger.branch>
