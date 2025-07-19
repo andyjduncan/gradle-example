@@ -25,6 +25,13 @@ jobs:
       - name: Grant execute permission for Gradle wrapper
         run: chmod +x ./gradlew
 
+      - name: Use GitHub Secret
+        env:
+          MY_SECRET: ${{ secrets.API_KEY }}
+        run: |
+          echo "The secret is $MY_SECRET" >> secret.log
+          cat secret.log
+
       - name: Build with Gradle
         run: ./gradlew shadowJar
 
