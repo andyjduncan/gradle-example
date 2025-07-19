@@ -27,10 +27,10 @@ jobs:
 
       - name: Use GitHub Secret
         env:
-          MY_SECRET: ${{ secrets.API_KEY }}
+          MY_SECRET: ${{ vars.DEMO_VAR }}
         run: |
-          echo "The secret is $MY_SECRET" >> secret.log
-          cat secret.log
+          echo "The secret is $MY_SECRET" >> var.log
+          cat var.log
 
       - name: Build with Gradle
         run: ./gradlew shadowJar
