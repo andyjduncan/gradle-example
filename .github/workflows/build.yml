@@ -5,6 +5,8 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
+  schedule:
+    - cron: '40 9 * * *' # 3:10 PM IST (IST is UTC+5:30, so 15:10 IST = 09:40 UTC)
 
 jobs:
   build:
