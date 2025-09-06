@@ -14,10 +14,11 @@ repositories {
 base.archivesName = 'gradle-example'
 
 dependencies {
-    implementation 'org.codehaus.groovy:groovy:3.+'
+    // Groovy BOM
+    implementation platform('org.apache.groovy:groovy-bom:5.+')
 
     // Groovy module dependency
-    implementation 'org.codehaus.groovy:groovy-json:3.+'
+    implementation 'org.apache.groovy:groovy-json'
 
     // Strictly exact version of Maven dependency
     implementation 'com.codevineyard:hello-world:1.0.1!!'
