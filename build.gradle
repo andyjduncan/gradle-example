@@ -1,17 +1,17 @@
 plugins {
     id 'groovy'
     id 'application'
-    id 'com.github.johnrengelman.shadow' version '5.2.0'
+    id 'com.gradleup.shadow' version '9.1.0'
 }
 
 repositories {
-    jcenter()
+    mavenCentral()
     flatDir {
         dirs 'lib'
     }
 }
 
-archivesBaseName = 'gradle-example'
+base.archivesName = 'gradle-example'
 
 dependencies {
     implementation 'org.codehaus.groovy:groovy:3.+'
@@ -27,5 +27,5 @@ dependencies {
 }
 
 application {
-    mainClassName = 'com.adjectivecolournoun.gradle.Greetz'
+    mainClass = 'com.adjectivecolournoun.gradle.Greetz'
 }
